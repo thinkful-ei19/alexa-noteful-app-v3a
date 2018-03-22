@@ -2,11 +2,11 @@
 
 const mongoose = require('mongoose');
 
-const foldersSchema = new mongoose.Schema({
+const folderSchema = new mongoose.Schema({
   name: {type: String, unique: true}
 });
 
-foldersSchema.set('toObject', {
+folderSchema.set('toObject', {
   transform: function (doc, ret) {
     ret.id = ret._id;
     delete ret._id;
@@ -14,4 +14,4 @@ foldersSchema.set('toObject', {
   }
 });
 
-module.exports = mongoose.model('Folder', foldersSchema);
+module.exports = mongoose.model('Folder', folderSchema);
