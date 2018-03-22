@@ -43,6 +43,31 @@ router.get('/folders/:id', (req, res, next) => {
     });
 });
 
+/* ========== POST/CREATE AN ITEM ========== */
+router.post('/folders', (req, res, next) => {
+  const { name } = req.body;
+
+  /***** Never trust users - validate input *****/
+  if(!name) {
+    const err = new Error('Missing `name` in request body');
+    err.status = 400;
+    return next(err);
+  }
+
+  const newItem = { name };
+
+  Folder.create(newItem)
+    .then(result => {
+      res.location(`${req.originalUrl}/${result.id}`).status(201).json(result);
+    })
+    .catch(err => {
+      if (err.code === 11000) {
+        err = new Error('The folder name already exists');
+        err.status = 400;
+      }
+      next(err);
+    });
+});
 
 
 module.exports = router;
