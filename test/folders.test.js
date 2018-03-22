@@ -171,6 +171,31 @@ describe('Noteful API - Notes', function() {
     });
   });
 
+  describe('DELETE /api/folders/:id', function() {
+    it('should delete a folder with the given id', function() {
+      let data; 
+      // 1. First call the database to get an id
+      return Folder.findOne().select('id name')
+        .then(_data => {
+          data = _data;
+          // 2. then call the API with the id
+          return chai.request(app).delete(`/api/folders/${data.id}`);
+        })
+        .then((res) => {
+          expect(res).to.have.status(204);
+        });
+    });
+
+    it('should respond with a 404 for an invalid id', function() {
+      return chai.request(app)
+        .delete('/api/folders/99')
+        .catch(err => err.response)
+        .then(res => {
+          expect(res).to.have.status(404);
+        });
+    });
+  });
+
 
 
 });
