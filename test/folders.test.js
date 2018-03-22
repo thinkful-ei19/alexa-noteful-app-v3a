@@ -130,6 +130,46 @@ describe('Noteful API - Notes', function() {
     });
   });
 
+  describe('PUT /api/folders/:id', function() {
+    it('should update the folder with the given id', function() {
+      const updatedFolder = {
+        'name': 'Updating folder name and testing'
+      };
+      let data;
+      // 1. First call the db to get an id
+      return Folder.findOne().select('id name')
+        .then(_data => {
+          data = _data;
+          // 2. then call the API with the given id and sending updatedFolder
+          return chai.request(app).put(`/api/folders/${data.id}`)
+            .send(updatedFolder);
+        })
+        .then((res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.json;
+
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.include.keys('id', 'name');
+
+          // 3. then compare database results to API response
+          expect(res.body.id).to.equal(data.id);
+          expect(res.body.name).to.equal(updatedFolder.name);
+        });
+    });
+
+    it('should respond with a 404 for an invalid id', function() {
+      const updatedFolder = {
+        'name': 'Updating folder name and testing'
+      };
+      // 1. First, call the API
+      return chai.request(app).put('/api/folders/ASASASASASASASASASASASAS')
+        .send(updatedFolder)
+        .catch(err => err.response)
+        .then(res => {
+          expect(res).to.have.status(404);
+        });
+    });
+  });
 
 
 
