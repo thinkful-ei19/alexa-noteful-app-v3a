@@ -107,4 +107,17 @@ router.put('/folders/:id', (req, res, next) => {
     });
 });
 
+/* ========== DELETE/REMOVE A SINGLE ITEM ========== */
+router.delete('/folders/:id', (req, res, next) => {
+  const { id } = req.params;
+
+  Folder.findByIdAndRemove(id)
+    .then(() => {
+      res.status(204).end();
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
 module.exports = router;
