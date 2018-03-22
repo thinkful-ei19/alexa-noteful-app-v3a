@@ -87,6 +87,45 @@ describe('Noteful API - Notes', function() {
 
   describe('POST /api/folders', function() {
     it('should create a new folder when provided with valid data', function() {
+      const newFolder = {
+        'name': 'My new folder'
+      };
+      let body;
+      // 1. call the API to test the new document
+      return chai.request(app).post('/api/folders').send(newFolder)
+        .then(function(res) {
+          body = res.body;
+          expect(res).to.have.status(201);
+          expect(res).to.have.header('location');
+          expect(res).to.be.json;
+
+          expect(body).to.be.a('object');
+          expect(body).to.have.keys('id', 'name');
+          //2. then call the database to retrieve the new document
+          return Folder.findById(body.id);
+        })
+      //3. then compare the API response to the database results
+        .then(data => {
+          expect(body.id).to.equal(data.id);
+          expect(body.name).to.equal(data.name);
+        });
+    });
+
+    it('should return an error when missnig "name" field', function() {
+      const newFolder = {
+        'title': 'This folder has no name field!'
+      };
+      // 1. call the API
+      return chai.request(app)
+        .post('/api/folders').send(newFolder)
+        .catch(err => err.response)
+        .then(res => {
+          expect(res).to.have.status(400);
+          expect(res).to.be.json;
+          expect(res.body).to.be.a('object');
+          expect(res.body.message).to.equal('Missing `name` in request body');
+
+        });
 
     });
   });
