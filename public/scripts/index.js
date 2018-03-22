@@ -10,7 +10,7 @@ $(document).ready(function () {
       noteful.render();
     });
 
-  console.log('Get folders, coming soon...');
+  //console.log('Get folders, coming soon...');
   api.search('/api/folders')
     .then(response => {
       store.folders = response;
