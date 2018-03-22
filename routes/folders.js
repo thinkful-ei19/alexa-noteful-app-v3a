@@ -69,5 +69,42 @@ router.post('/folders', (req, res, next) => {
     });
 });
 
+/* ========== PUT/UPDATE A SINGLE ITEM ========== */
+router.put('/folders/:id', (req, res, next) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  /***** Never trust users - validate input *****/
+  if (!name) {
+    const err = new Error('Missing `name` in request body');
+    err.status = 400;
+    return next(err);
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    const err = new Error('The `id` is not valid');
+    err.status = 400;
+    return next(err);
+  }
+
+  const updatedItem = { name };
+  const options = { new: true };
+
+  Folder.findByIdAndUpdate(id, updatedItem, options)
+    .then(result => {
+      if (result) {
+        res.json(result);
+      } else {
+        next();
+      }
+    })
+    .catch(err => {
+      if (err.code === 11000) {
+        err = new Error('The folder name already exists');
+        err.status = 400;
+      }
+      next(err);
+    });
+});
 
 module.exports = router;
