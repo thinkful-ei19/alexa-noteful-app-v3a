@@ -6,6 +6,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const Tag = require('../models/tag');
+const Note = require('../models/note');
 
 /* ========== GET/READ ALL ITEMS ========== */
 router.get('/tags', (req, res, next) => {
@@ -101,6 +102,25 @@ router.put('/tags/:id', (req, res, next) => {
         err = new Error('The tag name already exists');
         err.status = 400;
       }
+      next(err);
+    });
+});
+
+/* ========== DELETE/REMOVE A SINGLE ITEM ========== */
+router.delete('/tags/:id', (req, res, next) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    const err = new Error('The `id` is not valid');
+    err.status = 400;
+    return next(err);
+  }
+
+  Tag.findByIdAndRemove(id)
+    .then(() => {
+      res.status(204).end();
+    })
+    .catch(err => {
       next(err);
     });
 });
