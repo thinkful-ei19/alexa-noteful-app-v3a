@@ -113,7 +113,6 @@ router.delete('/tags/:id', (req, res, next) => {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     const err = new Error('The `id` is not valid');
-    //400 or 404?
     err.status = 400;
     return next(err);
   }
