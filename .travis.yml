@@ -5,6 +5,6 @@ deploy:
   provider: heroku
   api_key:
     secure: irihs9piL2bYBPNOfcrh/ws0orLiDK/0UCk6RmBxRcIB7pEeuPqB9ry6X1p9k8Vsw8W/EP4aT6FYy9UJPO28O8weDTNDV3FbXd8pBrhg85E2mu5S7TqiOa9VWcXl0vETb0szqf+08xcTQoDstPyty3Ilp7xmTA6ZD56lbhWW3I/v72WO2ht/00v2Q8/eTTCeY1VXHG6Jgm+8QuuR5VapuC84CwPvD338bHUuujqQkGV6673fd3ywBj3JJY7Zi5I5jDIaXNlAT4fzRlREDHUq0yrZ8mI4kaiWQ/JbwKeZw4DCcIkqPxuC1gdiT0znEYu2+pF4B2Oc/hq7jdZWJGZDGBPhLJ91WBv37N4/D5jL4BXExAI88d1FTF4Lqjq26sdtdmUCke589QeW9fpIrmSOqf8ocmKigt65EB9OCq8GzksFEI3+ogqclOdJkqC+Kd5N+fgpnONT60Gn1dgCWwR2oGNyIz9jptMusR1dmD23ujvRkTWTJ6/pl4XekYF4tnjyJnCFOHVMaCQ/e1lg/l1F44czYszHT5IujOOEXcwjyw3C8M1IcC9eOLs84t44OD1gzMRJmunVFGAkuj1/7cZe+Y18nRxriCuSSvp9UDo+VIDG8o0EHCVMNqz9iu5GCf0UELMlGZZ4Xqo4rMRiXLVcXCehHXkB1+sHqzXCHa9UQDA=
-  app: alexa-noteful-app-v3a
+  app: noteful-app-v3a-alexa
   on:
     repo: thinkful-ei19/alexa-noteful-app-v3a
