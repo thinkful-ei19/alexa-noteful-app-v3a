@@ -32,7 +32,25 @@ describe('Noteful API - Notes', function() {
     return mongoose.disconnect();
   });
 
+  describe('GET /api/tags', function() {
+    it('should return the correct number of tags', function() {
+      let data;
+      return Tag.find()
+        .then(_data => {
+          data = _data;
+          return chai.request(app).get('/api/tags');
+        })
+        .then((res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.json;
 
+          expect(res.body).to.be.a('array');
+
+          expect(res.body).to.have.length(data.length);
+
+        });
+    });
+  });
 
 
 });
