@@ -73,8 +73,6 @@ router.post('/folders', (req, res, next) => {
 router.put('/folders/:id', (req, res, next) => {
   const { id } = req.params;
   const { name } = req.body;
-  console.log('This is my id', id);
-  console.log('This is my name', name);
 
   /***** Never trust users - validate input *****/
   if (!name) {
