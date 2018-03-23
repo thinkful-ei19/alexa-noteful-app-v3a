@@ -47,10 +47,29 @@ describe('Noteful API - Notes', function() {
           expect(res.body).to.be.a('array');
 
           expect(res.body).to.have.length(data.length);
-
         });
     });
   });
 
+  describe('GET /api/tags/:id', function() {
+    it('should return the correct tag with given id', function() {
+      let data;
+      return Tag.findOne().select('id name')
+        .then(_data => {
+          data = _data;
+          return chai.request(app).get(`/api/tags/${data.id}`);
+        })
+        .then((res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.json;
+
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.keys('id', 'name');
+
+          expect(res.body.id).to.equal(data.id);
+          expect(res.body.name).to.equal(data.name);
+        });
+    });
+  });
 
 });

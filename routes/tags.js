@@ -117,6 +117,7 @@ router.delete('/tags/:id', (req, res, next) => {
   }
 
   Tag.findByIdAndRemove(id)
+  //need $pull operator
     .then(() => {
       res.status(204).end();
     })
