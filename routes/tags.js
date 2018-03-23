@@ -19,6 +19,29 @@ router.get('/tags', (req, res, next) => {
     });
 });
 
+/* ========== GET/READ A SINGLE ITEM ========== */
+router.get('/tags/:id', (req, res, next) => {
+  const { id } = req.params;
+
+  if(!mongoose.Types.ObjectId.isValid(id)) {
+    const err = new Error('The `id` is not valid');
+    err.status = 400;
+    return next(err);
+  }
+
+  Tag.findById(id)
+    .then(result => {
+      if (result) {
+        res.json(result);
+      } else {
+        next();
+      }
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
 
 
 module.exports = router;
