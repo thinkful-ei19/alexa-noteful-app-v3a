@@ -20,7 +20,8 @@ describe('Noteful API - Notes', function() {
   });
     
   beforeEach(function () {
-    return Folder.insertMany(seedFolders);
+    return Folder.insertMany(seedFolders)
+      .then(() => Folder.ensureIndexes());
   });
     
   afterEach(function () {
