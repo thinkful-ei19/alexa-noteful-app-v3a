@@ -145,7 +145,7 @@ describe('Noteful API - Notes', function() {
         });
     });
 
-    it('should respond with a 404 for an invalid id', function() {
+    it('should respond with a 400 for an invalid id', function() {
       const updatedTag = {
         'name': 'Updating tag name and testing'
       };
@@ -153,7 +153,7 @@ describe('Noteful API - Notes', function() {
         .send(updatedTag)
         .catch(err => err.response)
         .then(res => {
-          expect(res).to.have.status(404);
+          expect(res).to.have.status(400);
         });
     });
   });
@@ -171,12 +171,12 @@ describe('Noteful API - Notes', function() {
         });
     });
 
-    it('should respond with a 404 for an invalid id', function() {
+    it('should respond with a 400 for an invalid id', function() {
       return chai.request(app)
         .delete('/api/tags/99')
         .catch(err => err.response)
         .then(res => {
-          expect(res).to.have.status(404);
+          expect(res).to.have.status(400);
         });
     });
   });
